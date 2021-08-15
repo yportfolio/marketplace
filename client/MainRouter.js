@@ -8,6 +8,11 @@ import EditProfile from "./user/EditProfile";
 import Profile from "./user/Profile";
 import PrivateRoute from "./auth/PrivateRoute";
 import Menu from "./core/Menu";
+import NewShop from "./shop/NewShop";
+import MyShops from "./shop/MyShops";
+import Shops from "./shop/Shops";
+import Shop from "./shop/Shop";
+import EditShop from "./shop/EditShop";
 
 const MainRouter = () => {
   return (
@@ -18,6 +23,13 @@ const MainRouter = () => {
         <Route path="/users" component={Users} />
         <Route path="/signup" component={Signup} />
         <Route path="/signin" component={Signin} />
+
+        <Route path="/shops/all" component={Shops} />
+        <Route path="/shops/:shopId" component={Shop} />
+
+        <PrivateRoute path="/seller/shops" component={MyShops} />
+        <PrivateRoute path="/seller/shop/new" component={NewShop} />
+        <PrivateRoute path="/seller/shop/edit/:shopId" component={EditShop} />
         <PrivateRoute path="/user/edit/:userId" component={EditProfile} />
         <Route path="/user/:userId" component={Profile} />
       </Switch>
