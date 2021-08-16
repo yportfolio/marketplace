@@ -13,6 +13,7 @@ import MyShops from "./shop/MyShops";
 import Shops from "./shop/Shops";
 import Shop from "./shop/Shop";
 import EditShop from "./shop/EditShop";
+import NewProduct from "./product/NewProduct";
 
 const MainRouter = () => {
   return (
@@ -30,6 +31,11 @@ const MainRouter = () => {
         <PrivateRoute path="/seller/shops" component={MyShops} />
         <PrivateRoute path="/seller/shop/new" component={NewShop} />
         <PrivateRoute path="/seller/shop/edit/:shopId" component={EditShop} />
+        <PrivateRoute
+          path="/seller/:shopId/products/new"
+          component={NewProduct}
+        />
+
         <PrivateRoute path="/user/edit/:userId" component={EditProfile} />
         <Route path="/user/:userId" component={Profile} />
       </Switch>

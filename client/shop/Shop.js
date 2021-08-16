@@ -6,8 +6,8 @@ import Typography from "@material-ui/core/Typography";
 import Avatar from "@material-ui/core/Avatar";
 import Grid from "@material-ui/core/Grid";
 import { read } from "./api-shop.js";
-// import Products from "./../product/Products";
-// import { listByShop } from "./../product/api-product.js";
+import Products from "./../product/Products";
+import { listByShop } from "./../product/api-product.js";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -53,18 +53,18 @@ export default function Shop({ match }) {
     const signal = abortController.signal;
 
     //Todo why use second useEffect
-    // listByShop(
-    //   {
-    //     shopId: match.params.shopId,
-    //   },
-    //   signal
-    // ).then((data) => {
-    //   if (data.error) {
-    //     setError(data.error);
-    //   } else {
-    //     setProducts(data);
-    //   }
-    // });
+    listByShop(
+      {
+        shopId: match.params.shopId,
+      },
+      signal
+    ).then((data) => {
+      if (data.error) {
+        setError(data.error);
+      } else {
+        setProducts(data);
+      }
+    });
 
     read(
       {
@@ -84,27 +84,27 @@ export default function Shop({ match }) {
     };
   }, [match.params.shopId]);
 
-  //   useEffect(() => {
-  //     const abortController = new AbortController();
-  //     const signal = abortController.signal;
+  // useEffect(() => {
+  //   const abortController = new AbortController();
+  //   const signal = abortController.signal;
 
-  //     listByShop(
-  //       {
-  //         shopId: match.params.shopId,
-  //       },
-  //       signal
-  //     ).then((data) => {
-  //       if (data.error) {
-  //         setError(data.error);
-  //       } else {
-  //         setProducts(data);
-  //       }
-  //     });
+  //   listByShop(
+  //     {
+  //       shopId: match.params.shopId,
+  //     },
+  //     signal
+  //   ).then((data) => {
+  //     if (data.error) {
+  //       setError(data.error);
+  //     } else {
+  //       setProducts(data);
+  //     }
+  //   });
 
-  //     return function cleanup() {
-  //       abortController.abort();
-  //     };
-  //   }, [match.params.shopId]);
+  //   return function cleanup() {
+  //     abortController.abort();
+  //   };
+  // }, [match.params.shopId]);
 
   const logoUrl = shop._id
     ? `/api/shops/logo/${shop._id}?${new Date().getTime()}`
@@ -146,7 +146,7 @@ export default function Shop({ match }) {
             >
               Products
             </Typography>
-            {/* <Products products={products} searched={false} /> */}
+            <Products products={products} searched={false} />
           </Card>
         </Grid>
       </Grid>

@@ -75,10 +75,12 @@ const listByOwner = async (req, res) => {
 const shopByID = async (req, res, next, id) => {
   try {
     let shop = await Shop.findById(id).populate("owner", "_id name").exec();
+
     if (!shop)
       return res.status("400").json({
         error: "Shop not found",
       });
+
     req.shop = shop;
     next();
   } catch (err) {
