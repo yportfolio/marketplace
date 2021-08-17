@@ -26,4 +26,23 @@ const listByShop = async (params, signal) => {
   }
 };
 
-export { create, listByShop };
+const remove = async (params, credentials) => {
+  try {
+    let response = await fetch(
+      "/api/product/" + params.shopId + "/" + params.productId,
+      {
+        method: "DELETE",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + credentials.t,
+        },
+      }
+    );
+    return response.json();
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+export { create, listByShop, remove };

@@ -77,6 +77,18 @@ const productByID = async (req, res, next, id) => {
   }
 };
 
+const remove = async (req, res) => {
+  try {
+    let product = req.product;
+    let deletedProduct = await product.remove();
+    res.json(deletedProduct);
+  } catch (err) {
+    return res.status(400).json({
+      error: errorHandler.getErrorMessage(err),
+    });
+  }
+};
+
 const photo = (req, res, next) => {
   if (req.product.image.data) {
     res.set("Content-Type", req.product.image.contentType);
@@ -95,4 +107,5 @@ export default {
   photo,
   defaultPhoto,
   productByID,
+  remove,
 };

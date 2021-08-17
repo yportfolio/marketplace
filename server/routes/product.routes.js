@@ -16,6 +16,10 @@ router
 
 router.route("/api/product/defaultphoto").get(productCtrl.defaultPhoto);
 
+router
+  .route("/api/product/:shopId/:productId")
+  .delete(authCtrl.requireSignin, shopCtrl.isOwner, productCtrl.remove);
+
 router.param("shopId", shopCtrl.shopByID);
 router.param("productId", productCtrl.productByID);
 

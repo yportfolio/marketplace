@@ -14,7 +14,7 @@ import Typography from "@material-ui/core/Typography";
 import { Link } from "react-router-dom";
 import Divider from "@material-ui/core/Divider";
 import { listByShop } from "./../product/api-product.js";
-// import DeleteProduct from "./../product/DeleteProduct";
+import DeleteProduct from "./../product/DeleteProduct";
 
 const useStyles = makeStyles((theme) => ({
   products: {
@@ -140,11 +140,11 @@ export default function MyProducts(props) {
                     </IconButton>
                   </Link>
                   //Todo delete product component
-                  {/* <DeleteProduct
+                  <DeleteProduct
                     product={product}
                     shopId={props.shopId}
                     onRemove={removeProduct}
-                  /> */}
+                  />
                 </ListItemSecondaryAction>
               </ListItem>
               <Divider />
