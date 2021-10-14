@@ -139,7 +139,7 @@ export default function MyProducts(props) {
                       <Edit />
                     </IconButton>
                   </Link>
-                  //Todo delete product component
+
                   <DeleteProduct
                     product={product}
                     shopId={props.shopId}
@@ -155,6 +155,7 @@ export default function MyProducts(props) {
     </Card>
   );
 }
+
 MyProducts.propTypes = {
   shopId: PropTypes.string.isRequired,
 };

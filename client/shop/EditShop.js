@@ -13,7 +13,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import { read, update } from "./api-shop.js";
 import { Redirect } from "react-router-dom";
 import Grid from "@material-ui/core/Grid";
-// import MyProducts from "./../product/MyProducts";
+import MyProducts from "./../product/MyProducts";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -224,9 +224,9 @@ export default function EditShop({ match }) {
           </Card>
         </Grid>
         {/* TODO: product component */}
-        {/* <Grid item xs={6} sm={6}>
+        <Grid item xs={6} sm={6}>
           <MyProducts shopId={match.params.shopId} />
-        </Grid> */}
+        </Grid>
       </Grid>
     </div>
   );

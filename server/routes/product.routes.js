@@ -10,6 +10,10 @@ router
   .post(authCtrl.requireSignin, shopCtrl.isOwner, productCtrl.create)
   .get(productCtrl.listByShop);
 
+router.route("/api/products/latest").get(productCtrl.listLatest);
+
+router.route("/api/products/related/:productId").get(productCtrl.listRelated);
+
 router
   .route("/api/product/image/:productId")
   .get(productCtrl.photo, productCtrl.defaultPhoto);
@@ -18,7 +22,10 @@ router.route("/api/product/defaultphoto").get(productCtrl.defaultPhoto);
 
 router
   .route("/api/product/:shopId/:productId")
+  .put(authCtrl.requireSignin, shopCtrl.isOwner, productCtrl.update)
   .delete(authCtrl.requireSignin, shopCtrl.isOwner, productCtrl.remove);
+
+router.route("/api/products/:productId").get(productCtrl.read);
 
 router.param("shopId", shopCtrl.shopByID);
 router.param("productId", productCtrl.productByID);

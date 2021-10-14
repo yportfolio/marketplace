@@ -77,11 +77,79 @@ const productByID = async (req, res, next, id) => {
   }
 };
 
+const read = (req, res) => {
+  req.product.image = undefined;
+  return res.json(req.product);
+};
+
+const update = (req, res) => {
+  let form = new formidable.IncomingForm();
+  form.keepExtensions = true;
+  form.parse(req, async (err, fields, files) => {
+    if (err) {
+      return res.status(400).json({
+        message: "Photo could not be uploaded",
+      });
+    }
+
+    let product = req.product;
+    product = extend(product, fields);
+
+    product.updated = Date.now();
+
+    if (files.image) {
+      product.image.data = fs.readFileSync(files.image.path);
+      product.image.contentType = files.image.type;
+    }
+
+    try {
+      let result = await product.save();
+      res.json(result);
+    } catch (err) {
+      return res.status(400).json({
+        error: errorHandler.getErrorMessage(err),
+      });
+    }
+  });
+};
+
 const remove = async (req, res) => {
   try {
     let product = req.product;
     let deletedProduct = await product.remove();
     res.json(deletedProduct);
+  } catch (err) {
+    return res.status(400).json({
+      error: errorHandler.getErrorMessage(err),
+    });
+  }
+};
+
+const listLatest = async (req, res) => {
+  try {
+    let products = await Product.find({})
+      .sort("-created")
+      .limit(5)
+      .populate("shop", "_id name")
+      .exec();
+    res.json(products);
+  } catch (err) {
+    return res.status(400).json({
+      error: errorHandler.getErrorMessage(err),
+    });
+  }
+};
+
+const listRelated = async (req, res) => {
+  try {
+    let products = await Product.find({
+      _id: { $ne: req.product },
+      category: req.product.category,
+    })
+      .limit(5)
+      .populate("shop", "_id name")
+      .exec();
+    res.json(products);
   } catch (err) {
     return res.status(400).json({
       error: errorHandler.getErrorMessage(err),
@@ -108,4 +176,8 @@ export default {
   defaultPhoto,
   productByID,
   remove,
+  update,
+  read,
+  listLatest,
+  listRelated,
 };

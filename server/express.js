@@ -60,10 +60,13 @@ app.get("*", (req, res) => {
       </StaticRouter>
     )
   );
+
   if (context.url) {
     return res.redirect(303, context.url);
   }
+
   const css = sheets.toString();
+  
   res.status(200).send(
     Template({
       markup: markup,
