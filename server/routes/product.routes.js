@@ -25,7 +25,15 @@ router
   .put(authCtrl.requireSignin, shopCtrl.isOwner, productCtrl.update)
   .delete(authCtrl.requireSignin, shopCtrl.isOwner, productCtrl.remove);
 
+//获取所有的categories名称
+router.route("/api/products/categories").get(productCtrl.listCategories);
+
 router.route("/api/products/:productId").get(productCtrl.read);
+
+
+
+//获取搜索结果
+router.route("/api/products").get(productCtrl.list);
 
 router.param("shopId", shopCtrl.shopByID);
 router.param("productId", productCtrl.productByID);

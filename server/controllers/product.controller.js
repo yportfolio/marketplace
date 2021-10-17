@@ -157,6 +157,48 @@ const listRelated = async (req, res) => {
   }
 };
 
+
+/**
+ * 
+ * @param {*} req 
+ * @param {*} res 
+ * @returns 返回所有的categories名称。
+ */
+const listCategories = async (req, res) => {
+  try {
+    const products = await Product.distinct('category', {});
+    res.json(products);
+  } catch (error) {
+    return res.status(400).json({
+      error: errorHandler.getErrorMessage(error)
+    })
+  }
+
+};
+
+/**
+ * Search and return the results with provided search words and selected category.
+ * @param {Object} req 
+ * @param {Object} res 
+ * @returns 
+ */
+ const list = async (req, res) => {
+  //An object includes one regex for search keywords, one string for search category.
+  const query = {}
+  if(req.query.search)
+    query.name = {'$regex': req.query.search, '$options': "i"}
+  if(req.query.category && req.query.category != 'All')
+    query.category =  req.query.category
+  try {
+    let products = await Product.find(query).populate('shop', '_id name').select('-image').exec()
+    res.json(products)
+  } catch (err){
+    return res.status(400).json({
+      error: errorHandler.getErrorMessage(err)
+    })
+  }
+}
+
 const photo = (req, res, next) => {
   if (req.product.image.data) {
     res.set("Content-Type", req.product.image.contentType);
@@ -180,4 +222,6 @@ export default {
   read,
   listLatest,
   listRelated,
+  listCategories,
+  list
 };
